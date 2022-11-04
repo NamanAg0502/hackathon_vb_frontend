@@ -17,7 +17,7 @@ const Navbar = () => {
             <Link href="/blogs">Blogs</Link>
           </div>
           <Link href="/login">
-            <div className="font-semibold text-lg btn btn-primary rounded-sm text-white">
+            <div className="font-semibold text-lg btn bg-indigo-600 border-none rounded-sm text-white">
               Login
             </div>
           </Link>
