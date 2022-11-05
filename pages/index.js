@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { HomeHero } from '../components/HomeHero';
 import Navbar from '../components/Navbar';
 
@@ -7,7 +8,7 @@ const Home = () => {
       <HomeHero />
 
       <div className="flex flex-col md:flex-row mx-auto max-w-screen-3xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8 text-black">
-        <div className="flex flex-col ">
+        <div className="flex flex-col items-center">
           <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl pb-6">
             Present your Case!
           </h2>
@@ -25,6 +26,11 @@ const Home = () => {
               ex cumque voluptatibus repellendus!
             </p>
           </div>
+          <Link href="/login">
+            <div className="bg-blue-600 px-8 py-3 inline-block text-white mx-auto mt-5 font-bold hover:text-lg">
+              Present your Case!
+            </div>
+          </Link>
         </div>
         <div className="flex flex-col ">
           <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl pb-6">
