@@ -89,7 +89,7 @@ const Blogs = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
       <h1 className="center text-center text-4xl m-8">Blogs</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 flex justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-between">
         {blogInfo.blogData.map((data) => (
           <div className="inline-block" key={data.id}>
             <BlogCard cardData={data} />

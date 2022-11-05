@@ -1,5 +1,5 @@
-import { HomeHero } from "../components/HomeHero";
-import Navbar from "../components/Navbar";
+import { HomeHero } from '../components/HomeHero';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
   return (
@@ -58,8 +58,8 @@ const Home = () => {
             local attorneys that specialise in your chosen area of law as soon
             as you submit it via email. Your case is examined and analysed
             within 24 hours, and if a lawyer is interested in representing you,
-            you'll receive a detailed profile and bio of that person within that
-            time frame as well.
+            you&apos;ll receive a detailed profile and bio of that person within
+            that time frame as well.
           </p>
           <p>
             Our no-hassle and cost-free method connects you with pre-vetted
@@ -67,8 +67,8 @@ const Home = () => {
             local attorneys that specialise in your chosen area of law as soon
             as you submit it via email. Your case is examined and analysed
             within 24 hours, and if a lawyer is interested in representing you,
-            you'll receive a detailed profile and bio of that person within that
-            time frame as well.
+            you&apos;ll receive a detailed profile and bio of that person within
+            that time frame as well.
           </p>
           <p>
             Our no-hassle and cost-free method connects you with pre-vetted
@@ -76,8 +76,8 @@ const Home = () => {
             local attorneys that specialise in your chosen area of law as soon
             as you submit it via email. Your case is examined and analysed
             within 24 hours, and if a lawyer is interested in representing you,
-            you'll receive a detailed profile and bio of that person within that
-            time frame as well.
+            you&apos;ll receive a detailed profile and bio of that person within
+            that time frame as well.
           </p>
         </div>
       </div>
