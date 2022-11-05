@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
   };
 
   useEffect(() => {
-    checkAuthorization();
+    // checkAuthorization();
   }, []);
 
   return (

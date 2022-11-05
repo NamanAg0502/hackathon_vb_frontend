@@ -129,7 +129,7 @@ const Login = () => {
                       href="#"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
-                      New User? Register.
+                      Existing User? Login.
                     </a>
                   </div>
                 </div>
@@ -221,7 +221,7 @@ const Login = () => {
                       href="#"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
-                      New User? Register.
+                      Existing User? Login.
                     </a>
                   </div>
                 </div>
