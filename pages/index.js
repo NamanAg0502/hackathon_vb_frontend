@@ -7,19 +7,19 @@ const Home = () => {
     <div className="bg-gray-50 min-h-screen text-lg">
       <HomeHero />
 
-      <div className="flex flex-col md:flex-row mx-auto max-w-screen-3xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8 text-black">
-        <div className="flex flex-col items-center">
+      <div className="flex flex-col space-y-12 md:space-y-0 space-x-0 md:space-x-5 md:flex-row mx-auto max-w-screen-3xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8 text-black">
+        <div className="flex flex-col items-center border border-primary p-2 md:p-4 lg:p-6">
           <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl pb-6">
             Present your Case!
           </h2>
-          <div className="text-center px-5">
-            <p>
+          <div className="text-center px-2 md:px-5">
+            <p className="text-justify">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Obcaecati, aut odit a suscipit ad excepturi soluta alias fuga,
               fugiat dolore repellendus libero voluptatum quod! Nobis corporis
               ex cumque voluptatibus repellendus!
             </p>
-            <p>
+            <p className="text-justify">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Obcaecati, aut odit a suscipit ad excepturi soluta alias fuga,
               fugiat dolore repellendus libero voluptatum quod! Nobis corporis
@@ -27,29 +27,34 @@ const Home = () => {
             </p>
           </div>
           <Link href="/login">
-            <div className="bg-blue-600 px-8 py-3 inline-block text-white mx-auto mt-5 font-bold hover:text-lg">
+            <div className="bg-primary px-8 py-3 inline-block text-white mx-auto mt-5 font-bold hover:text-lg">
               Present your Case!
             </div>
           </Link>
         </div>
-        <div className="flex flex-col ">
+        <div className="flex flex-col items-center border border-primary p-2 md:p-4 lg:p-6">
           <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl pb-6">
             Are you a Lawyer?
           </h2>
-          <div className="text-center px-5">
-            <p>
+          <div className="text-center px-2 md:px-5">
+            <p className="text-justify">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Veritatis maiores dicta ipsam, perspiciatis laborum ipsum at
               mollitia laudantium repudiandae tenetur autem hic adipisci aperiam
               eligendi tempora commodi doloribus corrupti a.
             </p>
-            <p>
+            <p className="text-justify">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Veritatis maiores dicta ipsam, perspiciatis laborum ipsum at
               mollitia laudantium repudiandae tenetur autem hic adipisci aperiam
               eligendi tempora commodi doloribus corrupti a.
             </p>
           </div>
+          <Link href="/login">
+            <div className="bg-primary px-8 py-3 inline-block text-white mx-auto mt-5 font-bold hover:text-lg">
+              Register Now?
+            </div>
+          </Link>
         </div>
       </div>
       <div className="flex text-black justify-content text-lg pb-16 mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">

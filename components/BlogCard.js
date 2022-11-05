@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 function BlogCard(props) {
   return (
-    <div className="card card-compact m-8 bg-base-100 shadow-xl">
-      <figure className="m-2">
+    <div className="card card-compact rounded-md m-8 bg-base-100 shadow-lg">
+      <figure className="m-4 rounded-md">
         <Image
           width={400}
           height={225}
