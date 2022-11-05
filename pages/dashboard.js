@@ -1,4 +1,5 @@
 import {
+  Button,
   Tab,
   TabPanel,
   Tabs,
@@ -6,53 +7,131 @@ import {
   TabsHeader,
   Typography,
 } from "@material-tailwind/react";
+import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import ClientCards from "../components/dashboard/ClientCards";
+import { USER } from "../constants/user";
+import { UserContext } from "./_app.js";
 
 function Dashboard() {
-  const [tabHeaders, setTabHeaders] = useState([
-    "PERSONALIZED CASES",
-    "ALL CASES",
-  ]);
-
-  const data = [
+  const [caseData, setCaseData] = useState({});
+  const [userContext, setUserContext] = useContext(UserContext);
+  const [myCases, setMyCases] = useState([]);
+  const [tabData, setTabData] = useState([]);
+  const lawyerData = [
     {
-      label: "HTML",
-      value: "html",
-      desc: `It really matters and then like it really doesn't matter.
-      What matters is the people who are sparked by it. And the people 
-      who are like offended by it, it doesn't matter.`,
+      label: "RECOMMENDED",
+      value: "recommended",
     },
     {
-      label: "React",
-      value: "react",
-      desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
+      label: "ALL CASES",
+      value: "allCases",
     },
   ];
+  const clientData = [
+    {
+      label: "ALL CASES",
+      value: "allCases",
+    },
+  ];
+
+  const fetchLawyerSide = async () => {
+    setTabData(lawyerData);
+    const recommended = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/lawyer/id`,
+      {
+        headers: {
+          token: localStorage.getItem("LAWKIT_TOKEN"),
+        },
+      }
+    );
+    const allCases = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/`,
+      {
+        headers: {
+          token: localStorage.getItem("LAWKIT_TOKEN"),
+        },
+      }
+    );
+    setCaseData({
+      recommended: recommended.data.content,
+      allCases: allCases.data.content,
+    });
+  };
+
+  const fetchClientSide = async () => {
+    setTabData(clientData);
+    const clientCases = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/client/id`,
+      {
+        headers: {
+          token: localStorage.getItem("LAWKIT_TOKEN"),
+        },
+      }
+    );
+    setMyCases(clientCases.data.content);
+  };
+
+  console.log(myCases);
+
+  useEffect(() => {
+    if (userContext) {
+      if (userContext.userType === USER.LAWYER) fetchLawyerSide();
+      else fetchClientSide();
+    }
+  }, [userContext]);
+
   return (
-    <div className="text-black w-[100vw] ">
+    <div className="text-black w-[100vw] min-h-[60vh]">
       <div className="w-[90vw] md:w-[800px] m-auto mt-10 mb-10 ">
-        <Typography variant="h1">Dashboard</Typography>
-        <Typography>
-          Find all applied and recommended cases at one place
-        </Typography>
-        <Tabs value="html" className="mt-5">
-          <TabsHeader>
-            {data.map(({ label, value }) => (
-              <Tab key={value} value={value}>
-                {label}
-              </Tab>
-            ))}
-          </TabsHeader>
-          <TabsBody>
-            {data.map(({ value, desc }) => (
-              <TabPanel key={value} value={value}>
-                {desc}
-              </TabPanel>
-            ))}
-          </TabsBody>
-        </Tabs>
+        <div className="text-center md:text-left">
+          <Typography variant="h1">Dashboard</Typography>
+          <Typography>
+            Find all applied and recommended cases at one place
+          </Typography>
+        </div>
+        {userContext && userContext.userType === USER.CLIENT && (
+          <div className="text-center md:text-left">
+            <Button className="mt-4 mb-4" variant="gradient">
+              ADD NEW CASE
+            </Button>
+          </div>
+        )}
+        {caseData.recommended && caseData.allCases && (
+          <Tabs value="recommended" className="mt-5">
+            <TabsHeader>
+              {tabData.map(({ label, value }) => (
+                <Tab key={value} value={value}>
+                  {label}
+                </Tab>
+              ))}
+            </TabsHeader>
+            <TabsBody>
+              {tabData.map(({ value }) => {
+                return (
+                  <TabPanel key={value} value={value}>
+                    <div>
+                      {caseData[value].map((cd, index) => {
+                        return <div key={`CASE-${index}`}> {cd.caseName}</div>;
+                      })}
+                    </div>
+                  </TabPanel>
+                );
+              })}
+            </TabsBody>
+          </Tabs>
+        )}
+        {userContext && userContext.userType === USER.CLIENT && (
+          <div className="mt-10">
+            <Typography variant="h5">Active cases:</Typography>
+            {myCases.map((caseDetails, index) => {
+              return (
+                <ClientCards key={`CASE_DETAILS_${index}`} data={caseDetails} />
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

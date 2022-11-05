@@ -1,16 +1,20 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState, useContext } from "react";
+import { SUCCESS } from "../constants/status.code.js";
+import { USER } from "../constants/user.js";
+import { UserContext } from "./_app.js";
 
 const Login = () => {
   const [client, setClient] = useState(true);
   const [clientFormInput, setClientFormInput] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
   const [lawyerFormInput, setLawyerFormInput] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const handleClientSubmit = async (e) => {
     e.preventDefault();
@@ -25,20 +29,30 @@ const Login = () => {
         },
       }
     );
-    console.log(response);
+    if (response.data.status === SUCCESS.CLIENT_LOGIN_SUCCESSFUL) {
+      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      setUserContext({
+        userType: USER.CLIENT,
+      });
+    }
   };
 
   const handleLawyerSubmit = async (e) => {
     e.preventDefault();
     const response = await axios({
-      method: 'GET',
+      method: "GET",
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/client/login`,
       headers: {
         email: lawyerFormInput.username,
         password: lawyerFormInput.password,
       },
     });
-    console.log(response);
+    if (response.data.status === SUCCESS.LAWYER_LOGIN_SUCCESSFUL) {
+      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      setUserContext({
+        userType: USER.LAWYER,
+      });
+    }
   };
 
   return (
@@ -49,7 +63,7 @@ const Login = () => {
           <button
             onClick={() => setClient(true)}
             className={`tab px-3 text-2xl font-semibold ${
-              client ? 'tab-active border-b-2 text-indigo-600' : 'text-gray-400'
+              client ? "tab-active border-b-2 text-indigo-600" : "text-gray-400"
             }`}
           >
             Client
@@ -59,8 +73,8 @@ const Login = () => {
             onClick={() => setClient(false)}
             className={`tab px-3 text-2xl font-semibold ${
               !client
-                ? 'tab-active border-b-2 text-indigo-600'
-                : 'text-gray-400'
+                ? "tab-active border-b-2 text-indigo-600"
+                : "text-gray-400"
             }`}
           >
             Lawyer

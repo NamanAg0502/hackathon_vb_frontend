@@ -9,7 +9,7 @@ export const validateToken = async (token) => {
     }
   );
   if (validation.data.status === SUCCESS.TOKEN_VALIDATION_SUCCESSFUL)
-    return true;
+    return validation.data.userType;
   else return false;
 };
 

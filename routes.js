@@ -3,5 +3,5 @@ export const UNAUTHENTICATED_ROUTES = {
   "/blogs/*": true,
   "/login/*": true,
   "/register/*": true,
-  "/dashboard/*": true,
+  // "/dashboard/*": true,
 };
