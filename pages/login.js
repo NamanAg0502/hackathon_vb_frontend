@@ -6,14 +6,14 @@ const Login = () => {
   const handleSubmit = (req, res) => {};
 
   return (
-    <div className="min-h-screen bg-gray-50 w-full my-12">
-      <div className="flex flex-col items-center justify-center w-3/4 mx-auto">
+    <div className=" bg-gray-50 w-full my-12">
+      <div className="flex flex-col items-center justify-center w-full md:w-3/4 mx-auto">
         <div className="tabs text-black flex flex-row justify-between space-x-6  py-3 px-6 rounded-lg mb-5">
           {/* {client === false ? ( */}
           <button
             onClick={() => setClient(true)}
             className={`tab px-3 text-2xl font-semibold ${
-              client ? 'tab-active border-b-2 text-indigo-600' : ''
+              client ? 'tab-active border-b-4 text-indigo-600' : ''
             }`}
           >
             Client
@@ -22,16 +22,16 @@ const Login = () => {
           <button
             onClick={() => setClient(false)}
             className={`tab px-3 text-2xl font-semibold text-gray-500 ${
-              !client ? 'tab-active border-b-2 text-indigo-600' : ''
+              !client ? 'tab-active border-b-4 text-indigo-600' : ''
             }`}
           >
             Lawyer
           </button>
           {/* )} */}
         </div>
-        <div className="w-2/3 ">
+        <div className="w-full mx-2 md:w-2/3 ">
           {client === true ? (
-            <div className="bg-white p-6 flex flex-col items-center border rounded-md">
+            <div className="bg-white p-6 flex flex-col items-center border border-primary m-2 rounded-md">
               <h1 className="text-black font-semibold text-3xl">
                 Client Login
               </h1>
@@ -111,7 +111,7 @@ const Login = () => {
               </form>
             </div>
           ) : (
-            <div className="bg-indigo-600 p-6 flex flex-col items-center">
+            <div className="bg-primary m-2 rounded-md p-6 flex flex-col items-center">
               <h1 className="text-white font-semibold text-3xl">
                 Lawyer Login
               </h1>

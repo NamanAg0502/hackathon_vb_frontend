@@ -14,10 +14,10 @@ const Navbar = () => {
         </div>
         <div className="flex flex-row items-center justify-between space-x-5">
           <div className="font-semibold text-lg">
-            <Link href="/blogs">Blogs</Link>
+            <Link href="/blogs">BLOGS</Link>
           </div>
           <Link href="/login">
-            <div className="font-semibold text-lg btn bg-indigo-600 border-none rounded-sm text-white">
+            <div className="font-semibold text-lg btn bg-indigo-600 border-none rounded-md text-white">
               Login
             </div>
           </Link>
