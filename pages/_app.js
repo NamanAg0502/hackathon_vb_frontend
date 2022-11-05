@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { checkLoggedIn } from "../utils/checkLoggedIn.js";
 import { useRouter } from "next/router";
 import { checkRoute } from "../utils/manageRoute";
+import { ThemeProvider } from "@material-tailwind/react";
 
 function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,12 +23,13 @@ function MyApp({ Component, pageProps }) {
     checkAuthorization();
   }, []);
 
-  console.log(loggedIn);
   return (
     <div className="bg-gray-50">
-      <Navbar />
-      <Component {...pageProps} />
-      <Footer />
+      <ThemeProvider>
+        <Navbar />
+        <Component {...pageProps} />
+        <Footer />
+      </ThemeProvider>
     </div>
   );
 }

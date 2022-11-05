@@ -14,6 +14,5 @@ export const checkRoute = (path) => {
       break;
     }
   }
-  console.log(authorized);
   return authorized;
 };
