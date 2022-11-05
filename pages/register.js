@@ -1,44 +1,97 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import Link from "next/link";
+import { useState } from "react";
+import Select from "react-select";
+import { SUCCESS } from "../constants/status.code";
 
-const Login = () => {
+const options = [
+  { value: "FAMILY", label: "Family" },
+  { value: "CRIMINAL", label: "Criminal" },
+  { value: "FINANCES", label: "Finances" },
+  { value: "GOVERNMENT", label: "Government" },
+  { value: "IMMIGRATION", label: "Immigration" },
+];
+
+const Register = () => {
   const [client, setClient] = useState(true);
-  const [clientFormInput, setClientFormInput] = useState({
-    username: '',
-    password: '',
+  const [formInput, setFormInput] = useState({
+    name: "",
+    location: "",
+    email: "",
+    password: "",
+    mobile: "",
+    confirmPassword: "",
+    bio: "",
+    expertise: [],
   });
-  const [lawyerFormInput, setLawyerFormInput] = useState({
-    username: '',
-    password: '',
-  });
-
   const handleClientSubmit = async (e) => {
     e.preventDefault();
-    console.log(clientFormInput);
-    console.log(e);
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/client/login`,
+    // console.log
+    if (formInput.password !== formInput.confirmPassword) {
+      alert("Make sure that the passwords match in provided fields");
+      return;
+    }
+
+    console.log(formInput);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/client/register`,
       {
-        headers: {
-          email: clientFormInput.username,
-          password: clientFormInput.password,
+        clientDetails: {
+          name: formInput.name,
+          location: formInput.location,
+          mobile: formInput.mobile,
+          email: formInput.email,
+          password: formInput.password,
         },
       }
     );
-    console.log(response);
+    if (response.data.status === SUCCESS.CLIENT_LOGIN_SUCCESSFUL) {
+      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      setUserContext({
+        userType: USER.CLIENT,
+      });
+    } else {
+      alert("Error: " + response.data.st);
+    }
+  };
+  const setExpertise = (e) => {
+    const num = e.map((data) => {
+      return data.value;
+    });
+    setFormInput({ ...formInput, expertise: num });
   };
 
   const handleLawyerSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios({
-      method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/client/login`,
-      headers: {
-        email: lawyerFormInput.username,
-        password: lawyerFormInput.password,
-      },
-    });
-    console.log(response);
+    console.log(formInput);
+    if (formInput.password !== formInput.confirmPassword) {
+      alert("Make sure that the passwords match in provided fields");
+      return;
+    }
+
+    console.log(formInput);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/lawyer/register`,
+      {
+        lawyerDetails: {
+          name: formInput.name,
+          location: formInput.location,
+          mobile: formInput.mobile,
+          email: formInput.email,
+          password: formInput.password,
+          bio: formInput.bio,
+          expertise: formInput.expertise,
+        },
+      }
+    );
+    if (response.data.status === SUCCESS.LAWYER_LOGIN_SUCCESSFUL) {
+      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      setUserContext({
+        userType: USER.LAWYER,
+      });
+    } else {
+      alert("Error: " + response.data.status);
+    }
   };
 
   return (
@@ -49,7 +102,7 @@ const Login = () => {
           <button
             onClick={() => setClient(true)}
             className={`tab px-3 text-2xl font-semibold ${
-              client ? 'tab-active border-b-2 text-indigo-600' : 'text-gray-400'
+              client ? "tab-active border-b-2 text-indigo-600" : "text-gray-400"
             }`}
           >
             Client
@@ -59,8 +112,8 @@ const Login = () => {
             onClick={() => setClient(false)}
             className={`tab px-3 text-2xl font-semibold ${
               !client
-                ? 'tab-active border-b-2 text-indigo-600'
-                : 'text-gray-400'
+                ? "tab-active border-b-2 text-indigo-600"
+                : "text-gray-400"
             }`}
           >
             Lawyer
@@ -71,7 +124,7 @@ const Login = () => {
           {client === true ? (
             <div className="bg-white p-6 flex flex-col items-center border border-primary m-2 rounded-md">
               <h1 className="text-black font-semibold text-3xl">
-                Client Login
+                Register Client
               </h1>
               <form
                 className="m-8 space-y-6 w-3/4"
@@ -80,7 +133,67 @@ const Login = () => {
                 onSubmit={handleClientSubmit}
               >
                 <input type="hidden" name="remember" defaultValue="true" />
-                <div className="-space-y-px rounded-md shadow-sm ">
+                <div className="rounded-md shadow-sm space-y-3">
+                  <div>
+                    <label htmlFor="name" className="sr-only">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          name: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="location" className="sr-only">
+                      Location
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      autoComplete="location"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          location: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Location"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="mobile" className="sr-only">
+                      Mobile Number
+                    </label>
+                    <input
+                      id="mobile"
+                      name="mobile"
+                      type="text"
+                      autoComplete="mobile"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          mobile: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Mobile No."
+                    />
+                  </div>
                   <div>
                     <label htmlFor="email-address" className="sr-only">
                       Email address
@@ -92,12 +205,12 @@ const Login = () => {
                       autoComplete="email"
                       required
                       onChange={(e) =>
-                        setClientFormInput({
-                          ...clientFormInput,
-                          username: e.target.value,
+                        setFormInput({
+                          ...formInput,
+                          email: e.target.value,
                         })
                       }
-                      className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Email address"
                     />
                   </div>
@@ -112,25 +225,45 @@ const Login = () => {
                       autoComplete="current-password"
                       required
                       onChange={(e) =>
-                        setClientFormInput({
-                          ...clientFormInput,
+                        setFormInput({
+                          ...formInput,
                           password: e.target.value,
                         })
                       }
-                      className="relative block w-full bg-inherit appearance-none rounded-none rounded-b-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Password"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="password" className="sr-only">
+                      Confirm Password
+                    </label>
+                    <input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type="password"
+                      autoComplete="confirm-password"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          confirmPassword: e.target.value,
+                        })
+                      }
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Confirm Password"
                     />
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="text-sm">
-                    <a
-                      href="#"
+                    <Link
+                      href="/login"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Existing User? Login.
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -139,31 +272,15 @@ const Login = () => {
                     type="submit"
                     className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                        />
-                      </svg>
-                    </span>
-                    Log in
+                    Register
                   </button>
                 </div>
               </form>
             </div>
           ) : (
-            <div className="bg-white m-2 rounded-md border border-primary p-6 flex flex-col items-center">
+            <div className="bg-white p-6 flex flex-col items-center border border-primary m-2 rounded-md">
               <h1 className="text-black font-semibold text-3xl">
-                Lawyer Login
+                Register Lawyer
               </h1>
               <form
                 className="m-8 space-y-6 w-3/4"
@@ -172,7 +289,67 @@ const Login = () => {
                 onSubmit={handleLawyerSubmit}
               >
                 <input type="hidden" name="remember" defaultValue="true" />
-                <div className="-space-y-px rounded-md shadow-sm ">
+                <div className="rounded-md space-y-3">
+                  <div>
+                    <label htmlFor="name" className="sr-only">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          name: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="location" className="sr-only">
+                      Location
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      autoComplete="location"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          location: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Location"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="mobile" className="sr-only">
+                      Mobile Number
+                    </label>
+                    <input
+                      id="mobile"
+                      name="mobile"
+                      type="text"
+                      autoComplete="mobile"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          mobile: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Mobile No."
+                    />
+                  </div>
                   <div>
                     <label htmlFor="email-address" className="sr-only">
                       Email address
@@ -182,14 +359,14 @@ const Login = () => {
                       name="email"
                       type="email"
                       autoComplete="email"
+                      required
                       onChange={(e) =>
-                        setLawyerFormInput({
-                          ...clientFormInput,
-                          username: e.target.value,
+                        setFormInput({
+                          ...formInput,
+                          email: e.target.value,
                         })
                       }
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Email address"
                     />
                   </div>
@@ -202,27 +379,78 @@ const Login = () => {
                       name="password"
                       type="password"
                       autoComplete="current-password"
+                      required
                       onChange={(e) =>
-                        setLawyerFormInput({
-                          ...clientFormInput,
+                        setFormInput({
+                          ...formInput,
                           password: e.target.value,
                         })
                       }
-                      required
-                      className="relative block w-full bg-inherit appearance-none rounded-none rounded-b-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-indigo-100 sm:text-sm"
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Password"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="confirmPassword" className="sr-only">
+                      Password
+                    </label>
+                    <input
+                      id="lawyerConfirmPassword"
+                      name="lawyerPassword"
+                      type="password"
+                      autoComplete="confirm-password"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          confirmPassword: e.target.value,
+                        })
+                      }
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Confirm Password"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="bio" className="sr-only">
+                      Bio
+                    </label>
+                    <textarea
+                      id="bio"
+                      name="bio"
+                      type="text"
+                      rows={3}
+                      autoComplete="current-bio"
+                      required
+                      onChange={(e) =>
+                        setFormInput({
+                          ...formInput,
+                          bio: e.target.value,
+                        })
+                      }
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Your Bio"
+                    />
+                  </div>
+                  <div className="text-black">
+                    <Select
+                      options={options}
+                      isMulti
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      placeholder="Your Expertise"
+                      onChange={setExpertise}
                     />
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="text-sm">
-                    <a
-                      href="#"
+                    <Link
+                      href="/login"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Existing User? Login.
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -231,23 +459,7 @@ const Login = () => {
                     type="submit"
                     className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                        />
-                      </svg>
-                    </span>
-                    Log In
+                    Register
                   </button>
                 </div>
               </form>
@@ -259,4 +471,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
