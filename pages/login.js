@@ -1,44 +1,58 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState } from "react";
+import Link from "next/link";
+import { SUCCESS } from "../constants/status.code";
 
 const Login = () => {
   const [client, setClient] = useState(true);
-  const [clientFormInput, setClientFormInput] = useState({
-    username: '',
-    password: '',
-  });
-  const [lawyerFormInput, setLawyerFormInput] = useState({
-    username: '',
-    password: '',
+  const [formInput, setFormInput] = useState({
+    username: "",
+    password: "",
   });
 
   const handleClientSubmit = async (e) => {
     e.preventDefault();
-    console.log(clientFormInput);
+    console.log(formInput);
     console.log(e);
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/client/login`,
       {
         headers: {
-          email: clientFormInput.username,
-          password: clientFormInput.password,
+          email: formInput.username,
+          password: formInput.password,
         },
       }
     );
-    console.log(response);
+    // console.log(response.data.status);
+    if (response.data.status === SUCCESS.CLIENT_LOGIN_SUCCESSFUL) {
+      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      setUserContext({
+        userType: USER.CLIENT,
+      });
+    } else {
+      alert("Error: " + response.data.st);
+    }
   };
 
   const handleLawyerSubmit = async (e) => {
     e.preventDefault();
     const response = await axios({
-      method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/client/login`,
+      method: "GET",
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/lawyer/login`,
       headers: {
-        email: lawyerFormInput.username,
-        password: lawyerFormInput.password,
+        email: formInput.username,
+        password: formInput.password,
       },
     });
-    console.log(response);
+
+    if (response.data.status === SUCCESS.LAWYER_LOGIN_SUCCESSFUL) {
+      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      setUserContext({
+        userType: USER.LAWYER,
+      });
+    } else {
+      alert("Error: " + response.data.status);
+    }
   };
 
   return (
@@ -49,7 +63,7 @@ const Login = () => {
           <button
             onClick={() => setClient(true)}
             className={`tab px-3 text-2xl font-semibold ${
-              client ? 'tab-active border-b-2 text-indigo-600' : 'text-gray-400'
+              client ? "tab-active border-b-2 text-indigo-600" : "text-gray-400"
             }`}
           >
             Client
@@ -59,8 +73,8 @@ const Login = () => {
             onClick={() => setClient(false)}
             className={`tab px-3 text-2xl font-semibold ${
               !client
-                ? 'tab-active border-b-2 text-indigo-600'
-                : 'text-gray-400'
+                ? "tab-active border-b-2 text-indigo-600"
+                : "text-gray-400"
             }`}
           >
             Lawyer
@@ -92,8 +106,8 @@ const Login = () => {
                       autoComplete="email"
                       required
                       onChange={(e) =>
-                        setClientFormInput({
-                          ...clientFormInput,
+                        setFormInput({
+                          ...formInput,
                           username: e.target.value,
                         })
                       }
@@ -112,8 +126,8 @@ const Login = () => {
                       autoComplete="current-password"
                       required
                       onChange={(e) =>
-                        setClientFormInput({
-                          ...clientFormInput,
+                        setFormInput({
+                          ...formInput,
                           password: e.target.value,
                         })
                       }
@@ -125,12 +139,12 @@ const Login = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="text-sm">
-                    <a
-                      href="#"
+                    <Link
+                      href="/register"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       New User? Register.
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -183,8 +197,8 @@ const Login = () => {
                       type="email"
                       autoComplete="email"
                       onChange={(e) =>
-                        setLawyerFormInput({
-                          ...clientFormInput,
+                        setFormInput({
+                          ...formInput,
                           username: e.target.value,
                         })
                       }
@@ -203,8 +217,8 @@ const Login = () => {
                       type="password"
                       autoComplete="current-password"
                       onChange={(e) =>
-                        setLawyerFormInput({
-                          ...clientFormInput,
+                        setFormInput({
+                          ...formInput,
                           password: e.target.value,
                         })
                       }
@@ -217,12 +231,12 @@ const Login = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="text-sm">
-                    <a
-                      href="#"
+                    <Link
+                      href="/register"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       New User? Register.
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
