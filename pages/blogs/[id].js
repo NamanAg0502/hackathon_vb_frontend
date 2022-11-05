@@ -5,7 +5,7 @@ const Post = () => {
   const router = useRouter();
   const { id } = router.query;
   const blog = data.blogData[id - 1];
-  // console.log(blog);
+  console.log(blog);
   return (
     <>
       {/* <div className="bg-gray-50 min-h-screen ">
@@ -15,7 +15,7 @@ const Post = () => {
         </div>
       </div> */}
       <BlogHero blogData={blog} />
-      <div className="text-xl whitespace-pre-wrap px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-16 lg:py-30">
+      <div className="text-xl whitespace-pre-wrap px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-16 lg:py-30 text-black">
         {blog.content}
       </div>
     </>

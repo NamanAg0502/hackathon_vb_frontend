@@ -6,7 +6,7 @@ const Home = () => {
     <div className="bg-gray-50 min-h-screen text-lg">
       <HomeHero />
 
-      <div className="flex flex-col md:flex-row mx-auto max-w-screen-3xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
+      <div className="flex flex-col md:flex-row mx-auto max-w-screen-3xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8 text-black">
         <div className="flex flex-col ">
           <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl pb-6">
             Present your Case!
@@ -46,7 +46,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-content text-lg pb-16 mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+      <div className="flex text-black justify-content text-lg pb-16 mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-screen-2xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Find the perfect lawyer for you with our state of the art matching
@@ -83,7 +83,7 @@ const Home = () => {
       </div>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 text-black">
           <div className="mx-auto max-w-screen-2xl text-center">
             <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
               Read trusted reviews from our customers
