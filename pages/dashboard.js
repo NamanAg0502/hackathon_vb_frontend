@@ -112,8 +112,13 @@ function Dashboard() {
                 return (
                   <TabPanel key={value} value={value}>
                     <div>
-                      {caseData[value].map((cd, index) => {
-                        return <div key={`CASE-${index}`}> {cd.caseName}</div>;
+                      {caseData[value].map((caseDetails, index) => {
+                        return (
+                          <ClientCards
+                            key={`CASE_DETAILS_${index}`}
+                            data={caseDetails}
+                          />
+                        );
                       })}
                     </div>
                   </TabPanel>
