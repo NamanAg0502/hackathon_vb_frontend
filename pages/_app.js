@@ -1,10 +1,10 @@
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import "../styles/globals.css";
-import { useEffect, useState } from "react";
-import { checkLoggedIn } from "../utils/checkLoggedIn.js";
-import { useRouter } from "next/router";
-import { checkRoute } from "../utils/manageRoute";
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+import '../styles/globals.css';
+import { useEffect, useState } from 'react';
+import { checkLoggedIn } from '../utils/checkLoggedIn.js';
+import { useRouter } from 'next/router';
+import { checkRoute } from '../utils/manageRoute';
 
 function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -14,12 +14,12 @@ function MyApp({ Component, pageProps }) {
     const userAuthorized = checkRoute(router.asPath);
     if (!userAuthorized) {
       const loggedIn = await checkLoggedIn();
-      if (!loggedIn) router.push("/login");
+      if (!loggedIn) router.push('/login');
     }
   };
 
   useEffect(() => {
-    checkAuthorization();
+    // checkAuthorization();
   }, []);
 
   console.log(loggedIn);
