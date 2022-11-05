@@ -1,14 +1,21 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { SUCCESS } from "../constants/status.code.js";
+import { USER } from "../constants/user.js";
+import { UserContext } from "./_app.js";
 import Link from "next/link";
-import { SUCCESS } from "../constants/status.code";
 
 const Login = () => {
   const [client, setClient] = useState(true);
-  const [formInput, setFormInput] = useState({
+  const [clientFormInput, setClientFormInput] = useState({
     username: "",
     password: "",
   });
+  const [lawyerFormInput, setLawyerFormInput] = useState({
+    username: "",
+    password: "",
+  });
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const handleClientSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +51,6 @@ const Login = () => {
         password: formInput.password,
       },
     });
-
     if (response.data.status === SUCCESS.LAWYER_LOGIN_SUCCESSFUL) {
       localStorage.setItem("LAWKIT_TOKEN", response.data.id);
       setUserContext({
