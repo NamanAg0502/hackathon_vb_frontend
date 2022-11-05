@@ -1,5 +1,14 @@
 import axios from 'axios';
 import { useState } from 'react';
+import Select from 'react-select';
+
+const options = [
+  { value: 'FAMILY', label: 'Family' },
+  { value: 'CRIMINAL', label: 'Criminal' },
+  { value: 'FINANCES', label: 'Finances' },
+  { value: 'GOVERNMENT', label: 'Government' },
+  { value: 'IMMIGRATION', label: 'Immigration' },
+];
 
 const Login = () => {
   const [client, setClient] = useState(true);
@@ -71,7 +80,7 @@ const Login = () => {
           {client === true ? (
             <div className="bg-white p-6 flex flex-col items-center border border-primary m-2 rounded-md">
               <h1 className="text-black font-semibold text-3xl">
-                Client Login
+                Register Client
               </h1>
               <form
                 className="m-8 space-y-6 w-3/4"
@@ -80,7 +89,67 @@ const Login = () => {
                 onSubmit={handleClientSubmit}
               >
                 <input type="hidden" name="remember" defaultValue="true" />
-                <div className="-space-y-px rounded-md shadow-sm ">
+                <div className="rounded-md shadow-sm space-y-3">
+                  <div>
+                    <label htmlFor="name" className="sr-only">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          username: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="location" className="sr-only">
+                      Location
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      autoComplete="location"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          username: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Location"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="mobile" className="sr-only">
+                      Mobile Number
+                    </label>
+                    <input
+                      id="mobile"
+                      name="mobile"
+                      type="text"
+                      autoComplete="mobile"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          username: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Mobile No."
+                    />
+                  </div>
                   <div>
                     <label htmlFor="email-address" className="sr-only">
                       Email address
@@ -97,7 +166,7 @@ const Login = () => {
                           username: e.target.value,
                         })
                       }
-                      className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Email address"
                     />
                   </div>
@@ -117,7 +186,7 @@ const Login = () => {
                           password: e.target.value,
                         })
                       }
-                      className="relative block w-full bg-inherit appearance-none rounded-none rounded-b-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Password"
                     />
                   </div>
@@ -155,24 +224,84 @@ const Login = () => {
                         />
                       </svg>
                     </span>
-                    Log in
+                    Register
                   </button>
                 </div>
               </form>
             </div>
           ) : (
-            <div className="bg-white m-2 rounded-md border border-primary p-6 flex flex-col items-center">
+            <div className="bg-white p-6 flex flex-col items-center border border-primary m-2 rounded-md">
               <h1 className="text-black font-semibold text-3xl">
-                Lawyer Login
+                Register Lawyer
               </h1>
               <form
                 className="m-8 space-y-6 w-3/4"
                 action="#"
                 method="POST"
-                onSubmit={handleLawyerSubmit}
+                onSubmit={handleClientSubmit}
               >
                 <input type="hidden" name="remember" defaultValue="true" />
-                <div className="-space-y-px rounded-md shadow-sm ">
+                <div className="rounded-md space-y-3">
+                  <div>
+                    <label htmlFor="name" className="sr-only">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          username: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="location" className="sr-only">
+                      Location
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      autoComplete="location"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          username: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Location"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="mobile" className="sr-only">
+                      Mobile Number
+                    </label>
+                    <input
+                      id="mobile"
+                      name="mobile"
+                      type="text"
+                      autoComplete="mobile"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          username: e.target.value,
+                        })
+                      }
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Mobile No."
+                    />
+                  </div>
                   <div>
                     <label htmlFor="email-address" className="sr-only">
                       Email address
@@ -182,14 +311,14 @@ const Login = () => {
                       name="email"
                       type="email"
                       autoComplete="email"
+                      required
                       onChange={(e) =>
-                        setLawyerFormInput({
+                        setClientFormInput({
                           ...clientFormInput,
                           username: e.target.value,
                         })
                       }
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 bg-inherit placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Email address"
                     />
                   </div>
@@ -202,15 +331,45 @@ const Login = () => {
                       name="password"
                       type="password"
                       autoComplete="current-password"
+                      required
                       onChange={(e) =>
-                        setLawyerFormInput({
+                        setClientFormInput({
                           ...clientFormInput,
                           password: e.target.value,
                         })
                       }
-                      required
-                      className="relative block w-full bg-inherit appearance-none rounded-none rounded-b-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-indigo-100 sm:text-sm"
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="Password"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="bio" className="sr-only">
+                      Bio
+                    </label>
+                    <textarea
+                      id="bio"
+                      name="bio"
+                      type="text"
+                      rows={3}
+                      autoComplete="current-bio"
+                      required
+                      onChange={(e) =>
+                        setClientFormInput({
+                          ...clientFormInput,
+                          password: e.target.value,
+                        })
+                      }
+                      className="relative block w-full bg-inherit appearance-none rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Your Bio"
+                    />
+                  </div>
+                  <div className="text-black">
+                    <Select
+                      options={options}
+                      isMulti
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      placeholder="Your Expertise"
                     />
                   </div>
                 </div>
@@ -247,7 +406,7 @@ const Login = () => {
                         />
                       </svg>
                     </span>
-                    Log In
+                    Register
                   </button>
                 </div>
               </form>
