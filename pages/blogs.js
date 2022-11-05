@@ -1,6 +1,6 @@
 import BlogCard from '../components/BlogCard';
 
-import blogInfo from './api/BlogData.json';
+import blogInfo from '../BlogData.json';
 
 const Blogs = () => {
   // const blogData = [

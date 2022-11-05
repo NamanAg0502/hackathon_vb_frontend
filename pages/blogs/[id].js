@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { BlogHero } from "../../components/BlogHero";
-import data from "../api/BlogData.json";
+import { useRouter } from 'next/router';
+import { BlogHero } from '../../components/BlogHero';
+import data from '../../BlogData.json';
 const Post = () => {
   const router = useRouter();
   const { id } = router.query;
