@@ -49,7 +49,7 @@ const Register = () => {
         },
       }
     );
-    if (response.data.status === SUCCESS.CLIENT_LOGIN_SUCCESSFUL) {
+    if (response.data.status === SUCCESS.CLIENT_CREATE_SUCCESSFUL) {
       localStorage.setItem("LAWKIT_TOKEN", response.data.id);
       setUserContext({
         userType: USER.CLIENT,
@@ -91,7 +91,7 @@ const Register = () => {
         },
       }
     );
-    if (response.data.status === SUCCESS.LAWYER_LOGIN_SUCCESSFUL) {
+    if (response.data.status === SUCCESS.CLIENT_CREATE_SUCCESSFUL) {
       localStorage.setItem("LAWKIT_TOKEN", response.data.id);
       setUserContext({
         userType: USER.LAWYER,

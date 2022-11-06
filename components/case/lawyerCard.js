@@ -1,7 +1,35 @@
 import { Button, Typography } from "@material-tailwind/react";
-import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useContext, useState } from "react";
+import { SUCCESS } from "../../constants/status.code";
+import { USER } from "../../constants/user";
+import { UserContext } from "../../pages/_app.js";
 
-function LawyerCard({ data }) {
+function LawyerCard({ data, accepted }) {
+  const [show, setShow] = useState(false);
+  const [userContext, setUserContext] = useContext(UserContext);
+  const router = useRouter();
+
+  const acceptRequest = async () => {
+    console.log(data);
+    const acceptRequest = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/client/accept`,
+      {
+        lawyer: data.lawyer["_id"],
+      },
+      {
+        headers: {
+          token: localStorage.getItem("LAWKIT_TOKEN"),
+          caseid: router.query.id,
+        },
+      }
+    );
+    if (acceptRequest.data.status === SUCCESS.LAWYER_REQUEST_SUCCESSFUL) {
+      setShow(true);
+    }
+  };
+
   return (
     <div>
       <div
@@ -30,10 +58,34 @@ function LawyerCard({ data }) {
             <Typography>{data.lawyer.location}</Typography>
           </div>
         </div>
-        <div>
-          <Button variant="gradient">ACCEPT</Button>
-        </div>
+        {userContext.userType === USER.CLIENT && !accepted && (
+          <div>
+            <Button onClick={acceptRequest} variant="gradient">
+              ACCEPT
+            </Button>
+          </div>
+        )}
       </div>
+      {show && (
+        <div
+          class=" mt-4 p-4 mb-4 text-sm text-green-700 flex gap-3 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+          role="alert"
+        >
+          <svg
+            class="flex-shrink-0 w-5 h-5 text-green-700"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <span class="font-medium">Accepted Successfully</span>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { SUCCESS } from "../../constants/status.code";
 import { USER } from "../../constants/user";
 import { UserContext } from "../_app.js";
 
-function Case() {
+function Case({ accepted }) {
   const router = useRouter();
   const [userContext, setUserContext] = useContext(UserContext);
   const [caseDetails, setCaseDetails] = useState({});
@@ -25,6 +25,7 @@ function Case() {
           },
         }
       );
+
       console.log(caseResponse.data);
       if (
         caseResponse.data.content &&
@@ -74,6 +75,8 @@ function Case() {
     }
   };
 
+  console.log(caseDetails);
+
   return (
     <div>
       <div className="text-black w-[100vw] min-h-[60vh]">
@@ -106,9 +109,11 @@ function Case() {
             Lawyer:
           </Typography>
           <Typography className="mb-5">
-            {caseDetails.lawyer
-              ? caseDetails.lawyer.name
-              : "No lawyers on this case till now"}
+            {caseDetails.lawyer ? (
+              <LawyerCard accepted={true} data={caseDetails} />
+            ) : (
+              "No lawyers on this case till now"
+            )}
           </Typography>
           <Typography variant="h5" className="mb-3">
             Lawyers Interested:
