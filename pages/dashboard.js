@@ -40,7 +40,7 @@ function Dashboard() {
   const fetchLawyerSide = async () => {
     setTabData(lawyerData);
     const recommended = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/lawyer/id`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/lawyer`,
       {
         headers: {
           token: localStorage.getItem("LAWKIT_TOKEN"),
