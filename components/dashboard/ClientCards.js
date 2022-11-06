@@ -1,9 +1,10 @@
 import { Typography } from "@material-tailwind/react";
+import Link from "next/link";
 import React from "react";
 
 function ClientCards({ data }) {
   return (
-    <div>
+    <Link href={`/case/${data["_id"]}`}>
       <div
         className="p-4 mt-5 mb-5 hover:shadow-[grey] shadow-lg cursor-pointer"
         style={{
@@ -14,7 +15,7 @@ function ClientCards({ data }) {
         <Typography variant="h4">{data.caseName}</Typography>
         <Typography>{data.caseDescription}</Typography>
       </div>
-    </div>
+    </Link>
   );
 }
 
