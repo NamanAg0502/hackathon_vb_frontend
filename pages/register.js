@@ -50,6 +50,9 @@ const Register = () => {
       setUserContext({
         userType: USER.CLIENT,
       });
+      Router.push({
+        pathname: "/dashboard",
+      });
     } else {
       alert("Error: " + response.data.st);
     }
@@ -88,6 +91,9 @@ const Register = () => {
       localStorage.setItem("LAWKIT_TOKEN", response.data.id);
       setUserContext({
         userType: USER.LAWYER,
+      });
+      Router.push({
+        pathname: "/dashboard",
       });
     } else {
       alert("Error: " + response.data.status);

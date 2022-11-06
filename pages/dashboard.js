@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import axios from "axios";
+import Link from "next/link";
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import ClientCards from "../components/dashboard/ClientCards";
@@ -93,9 +94,11 @@ function Dashboard() {
         </div>
         {userContext && userContext.userType === USER.CLIENT && (
           <div className="text-center md:text-left">
-            <Button className="mt-4 mb-4" variant="gradient">
-              ADD NEW CASE
-            </Button>
+            <Link href="/case/create">
+              <Button className="mt-4 mb-4" variant="gradient">
+                ADD NEW CASE
+              </Button>
+            </Link>
           </div>
         )}
         {caseData.recommended && caseData.allCases && (

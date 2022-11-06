@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SUCCESS } from "../constants/status.code";
 import { UserContext } from "./_app.js";
 import { USER } from "../constants/user.js";
+import Router from "next/router";
 
 const Login = () => {
   const [client, setClient] = useState(true);
@@ -32,6 +33,9 @@ const Login = () => {
       setUserContext({
         userType: USER.CLIENT,
       });
+      Router.push({
+        pathname: "/dashboard",
+      });
     } else {
       alert("Error: " + response.data.st);
     }
@@ -52,6 +56,9 @@ const Login = () => {
       localStorage.setItem("LAWKIT_TOKEN", response.data.id);
       setUserContext({
         userType: USER.LAWYER,
+      });
+      Router.push({
+        pathname: "/dashboard",
       });
     } else {
       alert("Error: " + response.data.status);
