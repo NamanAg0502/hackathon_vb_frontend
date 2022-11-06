@@ -78,7 +78,7 @@ const Create = () => {
                   onChange={(e) =>
                     setFormInput({
                       ...formInput,
-                      subject: e.target.value,
+                      caseName: e.target.value,
                     })
                   }
                 />
@@ -100,7 +100,7 @@ const Create = () => {
                   onChange={(e) =>
                     setFormInput({
                       ...formInput,
-                      description: e.target.value,
+                      caseDescription: e.target.value,
                     })
                   }
                   rows="10"

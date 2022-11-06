@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -15,6 +15,9 @@ const Navbar = () => {
         <div className="flex flex-row items-center justify-between space-x-5">
           <div className="font-semibold text-lg">
             <Link href="/blogs">BLOGS</Link>
+          </div>
+          <div className="font-semibold text-lg">
+            <Link href="/packages">Our Packages</Link>
           </div>
           <Link href="/login">
             <div className="font-semibold text-lg btn bg-primary border-none rounded-md text-white">
