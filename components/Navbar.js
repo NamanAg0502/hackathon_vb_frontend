@@ -1,5 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import { Button, Typography } from "@material-tailwind/react";
+import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -7,20 +8,19 @@ const Navbar = () => {
       <div className="navbar w-[96%] mx-auto">
         <div className="flex-1">
           <Link href="/">
-            <div className="btn btn-ghost normal-case text-2xl font-bold">
-              LAWKIT
-            </div>
+            <Typography variant="h2">LawKit</Typography>
           </Link>
         </div>
-        <div className="flex flex-row items-center justify-between space-x-5">
-          <div className="font-semibold text-lg">
-            <Link href="/blogs">BLOGS</Link>
-          </div>
-          <Link href="/login">
-            <div className="font-semibold text-lg btn bg-primary border-none rounded-md text-white">
-              Login
-            </div>
+        <div className="flex gap-3 flex-row items-center justify-between space-x-5">
+          <Link href="/dashboard">
+            <Typography>Dashboard</Typography>
           </Link>
+          <Link href="/blogs">
+            <Typography>Blogs</Typography>
+          </Link>
+          <Button variant="gradient">
+            <Link href="/login">Login</Link>
+          </Button>
         </div>
       </div>
     </div>
