@@ -1,8 +1,11 @@
 import axios from "axios";
+import { useContext, useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
-import Select from "react-select";
 import { SUCCESS } from "../constants/status.code";
+import { UserContext } from "./_app.js";
+import { USER } from "../constants/user.js";
+import Router from "next/router";
+import Select from "react-select";
 
 const options = [
   { value: "FAMILY", label: "Family" },
@@ -24,6 +27,7 @@ const Register = () => {
     bio: "",
     expertise: [],
   });
+  const [userContext, setUserContext] = useContext(UserContext);
   const handleClientSubmit = async (e) => {
     e.preventDefault();
     // console.log
@@ -54,7 +58,7 @@ const Register = () => {
         pathname: "/dashboard",
       });
     } else {
-      alert("Error: " + response.data.st);
+      alert("Error: " + response.data.status);
     }
   };
   const setExpertise = (e) => {

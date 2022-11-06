@@ -85,7 +85,7 @@ function Dashboard() {
 
   return (
     <div className="text-black w-[100vw] min-h-[60vh]">
-      <div className="w-[90vw] md:w-[800px] m-auto mt-10 mb-10 ">
+      <div className="w-[90vw] md:w-[800px] m-auto mt-10 mb-10  pb-10">
         <div className="text-center md:text-left">
           <Typography variant="h1">Dashboard</Typography>
           <Typography>
