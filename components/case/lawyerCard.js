@@ -25,10 +25,13 @@ function LawyerCard({ data }) {
               ))}
             </div>
           )}
+          <div className="flex mt-3">
+            <Typography variant="h6">Location:</Typography>
+            <Typography>{data.lawyer.location}</Typography>
+          </div>
         </div>
         <div>
-          <Typography variant="h6">Location:</Typography>
-          <Typography>{data.lawyer.location}</Typography>
+          <Button variant="gradient">ACCEPT</Button>
         </div>
       </div>
     </div>
