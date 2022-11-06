@@ -2,6 +2,9 @@ import Link from "next/link";
 import { useState } from "react";
 import Select from "react-select";
 import axios from "axios";
+import { success } from "daisyui/src/colors";
+import { SUCCESS } from "../../constants/status.code";
+import { useRouter } from "next/router";
 
 const Create = () => {
   const [formInput, setFormInput] = useState({
@@ -16,6 +19,8 @@ const Create = () => {
     { value: "GOVERNMENT", label: "Government" },
     { value: "IMMIGRATION", label: "Immigration" },
   ];
+  const router = useRouter();
+
   const setExpertise = (e) => {
     const num = e.map((data) => {
       return data.value;
@@ -26,8 +31,8 @@ const Create = () => {
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("LAWKIT_TOKEN");
-    console.log(formInput)
-    console.log(token)
+    console.log(formInput);
+    console.log(token);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/`,
       {
@@ -43,7 +48,9 @@ const Create = () => {
         },
       }
     );
-    console.log(response);
+    if (response.data.status === SUCCESS.CASE_CREATE_SUCCESSFUL) {
+      router.push("/dashboard");
+    }
   };
 
   return (
