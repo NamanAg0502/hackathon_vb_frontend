@@ -2,7 +2,6 @@ import { Button, Typography } from "@material-tailwind/react";
 import React from "react";
 
 function LawyerCard({ data }) {
-  console.log(data);
   return (
     <div>
       <div
@@ -31,9 +30,6 @@ function LawyerCard({ data }) {
           <Typography variant="h6">Location:</Typography>
           <Typography>{data.lawyer.location}</Typography>
         </div>
-      </div>
-      <div className="text-center md:text-left">
-        <Button variant="gradient">I AM INTERESTED</Button>
       </div>
     </div>
   );

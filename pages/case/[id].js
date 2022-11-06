@@ -1,4 +1,4 @@
-import { Chip, Typography } from "@material-tailwind/react";
+import { Alert, Button, Chip, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
@@ -11,6 +11,9 @@ function Case() {
   const router = useRouter();
   const [userContext, setUserContext] = useContext(UserContext);
   const [caseDetails, setCaseDetails] = useState({});
+  const [show, setShow] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
   const fetchCaseDetails = async () => {
     if (userContext.userType === USER.CLIENT) {
       const caseResponse = await axios.get(
@@ -46,7 +49,27 @@ function Case() {
     if (router.query.id && userContext) fetchCaseDetails();
   }, [router.query, userContext]);
 
-  console.log(caseDetails);
+  const requestCase = async () => {
+    console.log(localStorage.getItem("LAWKIT_TOKEN"), router.query.id);
+    const request = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/lawyer/request`,
+      {},
+      {
+        headers: {
+          token: localStorage.getItem("LAWKIT_TOKEN"),
+          caseid: router.query.id,
+        },
+      }
+    );
+    if (request.data.status === SUCCESS.LAWYER_REQUEST_SUCCESSFUL) {
+      if (request.data.content) {
+        setModalMessage("Request Successfully added");
+      } else {
+        setModalMessage("Request Already Added earlier");
+      }
+      setShow(true);
+    }
+  };
 
   return (
     <div>
@@ -101,6 +124,21 @@ function Case() {
               </Typography>
             )}
           </div>
+          {userContext && userContext.userType === USER.LAWYER && (
+            <div className="text-center md:text-left">
+              <Button onClick={requestCase} variant="gradient">
+                I AM INTERESTED
+              </Button>
+            </div>
+          )}
+          {show && (
+            <div
+              class=" mt-4 p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+              role="alert"
+            >
+              <span class="font-medium">{modalMessage}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
