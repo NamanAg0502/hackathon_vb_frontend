@@ -1,16 +1,18 @@
-import axios from "axios";
-import { useContext, useState } from "react";
-import Link from "next/link";
-import { SUCCESS } from "../constants/status.code";
-import { UserContext } from "./_app.js";
-import { USER } from "../constants/user.js";
-import Router from "next/router";
+import axios from 'axios';
+import { createContext, useContext, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { SUCCESS } from '../constants/status.code';
+import { UserContext } from './_app.js';
+import { USER } from '../constants/user.js';
+import Router from 'next/router';
+
+const AuthContext = createContext(false);
 
 const Login = () => {
   const [client, setClient] = useState(true);
   const [formInput, setFormInput] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   const [userContext, setUserContext] = useContext(UserContext);
 
@@ -29,22 +31,22 @@ const Login = () => {
     );
     // console.log(response.data.status);
     if (response.data.status === SUCCESS.CLIENT_LOGIN_SUCCESSFUL) {
-      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      localStorage.setItem('LAWKIT_TOKEN', response.data.id);
       setUserContext({
         userType: USER.CLIENT,
       });
       Router.push({
-        pathname: "/dashboard",
+        pathname: '/dashboard',
       });
     } else {
-      alert("Error: " + response.data.st);
+      alert('Error: ' + response.data.st);
     }
   };
 
   const handleLawyerSubmit = async (e) => {
     e.preventDefault();
     const response = await axios({
-      method: "GET",
+      method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/lawyer/login`,
       headers: {
         email: formInput.username,
@@ -53,15 +55,15 @@ const Login = () => {
     });
 
     if (response.data.status === SUCCESS.LAWYER_LOGIN_SUCCESSFUL) {
-      localStorage.setItem("LAWKIT_TOKEN", response.data.id);
+      localStorage.setItem('LAWKIT_TOKEN', response.data.id);
       setUserContext({
         userType: USER.LAWYER,
       });
       Router.push({
-        pathname: "/dashboard",
+        pathname: '/dashboard',
       });
     } else {
-      alert("Error: " + response.data.status);
+      alert('Error: ' + response.data.status);
     }
   };
 
@@ -73,7 +75,7 @@ const Login = () => {
           <button
             onClick={() => setClient(true)}
             className={`tab px-3 text-2xl font-semibold ${
-              client ? "tab-active border-b-2 text-indigo-600" : "text-gray-400"
+              client ? 'tab-active border-b-2 text-indigo-600' : 'text-gray-400'
             }`}
           >
             Client
@@ -83,8 +85,8 @@ const Login = () => {
             onClick={() => setClient(false)}
             className={`tab px-3 text-2xl font-semibold ${
               !client
-                ? "tab-active border-b-2 text-indigo-600"
-                : "text-gray-400"
+                ? 'tab-active border-b-2 text-indigo-600'
+                : 'text-gray-400'
             }`}
           >
             Lawyer

@@ -1,8 +1,28 @@
-import { Button, Typography } from "@material-tailwind/react";
-import Image from "next/image";
-import Link from "next/link";
+import { Button, Typography } from '@material-tailwind/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLoggedOut = () => {
+    localStorage.removeItem('LAWKIT_TOKEN');
+  };
+
+  console.log(loggedIn);
+
+  useEffect(() => {
+    // localStorage.removeItem('LAWKIT_TOKEN');
+    const token = localStorage.getItem('LAWKIT_TOKEN');
+    if (token) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+    console.log(token);
+  }, []);
+
   return (
     <div className=" bg-gray-100 text-black shadow-sm">
       <div className="navbar w-[96%] mx-auto">
@@ -18,9 +38,17 @@ const Navbar = () => {
           <Link href="/blogs">
             <Typography>Blogs</Typography>
           </Link>
-          <Button variant="gradient">
-            <Link href="/login">Login</Link>
-          </Button>
+          {!loggedIn ? (
+            <Link href="/login">
+              <Button variant="gradient">Login</Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button variant="gradient" onClick={handleLoggedOut}>
+                Logout
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -6,14 +6,14 @@ import {
   TabsBody,
   TabsHeader,
   Typography,
-} from "@material-tailwind/react";
-import axios from "axios";
-import Link from "next/link";
-import React from "react";
-import { useState, useEffect, useContext } from "react";
-import ClientCards from "../components/dashboard/ClientCards";
-import { USER } from "../constants/user";
-import { UserContext } from "./_app.js";
+} from '@material-tailwind/react';
+import axios from 'axios';
+import Link from 'next/link';
+import React from 'react';
+import { useState, useEffect, useContext } from 'react';
+import ClientCards from '../components/dashboard/ClientCards';
+import { USER } from '../constants/user';
+import { UserContext } from './_app.js';
 
 function Dashboard() {
   const [caseData, setCaseData] = useState({});
@@ -22,18 +22,18 @@ function Dashboard() {
   const [tabData, setTabData] = useState([]);
   const lawyerData = [
     {
-      label: "RECOMMENDED",
-      value: "recommended",
+      label: 'RECOMMENDED',
+      value: 'recommended',
     },
-    {
-      label: "ALL CASES",
-      value: "allCases",
-    },
+    // {
+    //   label: 'ALL CASES',
+    //   value: 'allCases',
+    // },
   ];
   const clientData = [
     {
-      label: "ALL CASES",
-      value: "allCases",
+      label: 'ALL CASES',
+      value: 'allCases',
     },
   ];
 
@@ -43,7 +43,7 @@ function Dashboard() {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/lawyer/id`,
       {
         headers: {
-          token: localStorage.getItem("LAWKIT_TOKEN"),
+          token: localStorage.getItem('LAWKIT_TOKEN'),
         },
       }
     );
@@ -51,7 +51,7 @@ function Dashboard() {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/`,
       {
         headers: {
-          token: localStorage.getItem("LAWKIT_TOKEN"),
+          token: localStorage.getItem('LAWKIT_TOKEN'),
         },
       }
     );
@@ -67,14 +67,14 @@ function Dashboard() {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/case/client/id`,
       {
         headers: {
-          token: localStorage.getItem("LAWKIT_TOKEN"),
+          token: localStorage.getItem('LAWKIT_TOKEN'),
         },
       }
     );
     setMyCases(clientCases.data.content);
   };
 
-  console.log(myCases);
+  console.log(caseData);
 
   useEffect(() => {
     if (userContext) {
